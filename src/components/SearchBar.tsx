@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useMyContext } from '../context/AppContext';
 import type { Movie } from '../libs/type';
+import styles from '../pages/home.module.css'
 
 type Status = "idle" | "loading" | "done";
 
@@ -16,7 +17,7 @@ export default function SearchBar() {
   if (!context) return <p>Context is unavailable</p>;
   const { likedMovies, addToFavourite, removeFromFavourite } = context;
 
-  const fetchMovies = async (query1: string, query2:string, query3: string) => {
+  const fetchMovies = async (query1: string, query2: string, query3: string) => {
     if (!query1) return;
     setStatus("loading");
 
@@ -37,7 +38,7 @@ export default function SearchBar() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.searchForm}>
         <input
           type="text"
           name="searchMovie"
@@ -61,39 +62,48 @@ export default function SearchBar() {
           <option value="episode">Episode</option>
         </select>
         <button type="submit">Find</button>
+        <button type="button" onClick={() => { setSearchMovie(''); setMovies([]); setStatus("idle"); }}>
+          Clear
+        </button>
       </form>
-      
+
       {status === "idle" && null}
       {status === "loading" && <p>Loading...</p>}
       {status === "done" && movies.length === 0 && <p>Nothing found</p>}
+
       {status === "done" && movies.length > 0 && (
-        movies.map((movie) => {
-          const isLike = likedMovies.some((m: Movie) => m.imdbID === movie.imdbID);
-          return (
-            <ul key={movie.imdbID}>
-              <li>
-                <NavLink to={`/movies/${movie.imdbID}`}>
-                  {movie.Title} ({movie.Year})
-                </NavLink>
-                <span
-                  className="like"
-                  onClick={() =>
-                    isLike
-                      ? removeFromFavourite(movie.imdbID)
-                      : addToFavourite(movie)
-                  }
-                >
-                  {isLike ? "❤️" : "🤍"}
-                </span>
-              </li>
-              <li>
+        <div className={styles.movieGrid}>
+          {movies.map((movie) => {
+            const isLike = likedMovies.some(
+              (m: Movie) => m.imdbID === movie.imdbID
+            );
+
+            return (
+              <div key={movie.imdbID} className={styles.movieCard}>
                 <NavLink to={`/movies/${movie.imdbID}`}>
                   <img src={movie.Poster} alt={movie.Title} />
                 </NavLink>
-              </li>
-            </ul>
-          );
-        })
+                <div className={styles.movieInfo}>
+                  <NavLink to={`/movies/${movie.imdbID}`}>
+                    <h3>
+                      {movie.Title} ({movie.Year})
+                    </h3>
+                  </NavLink>
+                  <span
+                    className={styles.like}
+                    onClick={() =>
+                      isLike
+                        ? removeFromFavourite(movie.imdbID)
+                        : addToFavourite(movie)
+                    }
+                  >
+                    {isLike ? "❤️" : "🤍"}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       )}
     </div>
   );
