@@ -1,0 +1,61 @@
+.movieDetailCard {
+    display: flex;
+   justify-content: center;
+   gap: 2rem;
+   margin-top: 5%;
+   width: 50%;  
+   height: 80%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.movieDetailCard:hover {
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.movieDetailCard p {
+  margin: 0.4rem 0;
+  font-size: 1rem;
+}
+
+.like {
+  cursor: pointer;
+  font-size: 2rem;
+  margin: 1rem 0;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.like:hover {
+  transform: scale(1.3);
+}
+
+.poster {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-top: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+
+.pageWrapper {
+  display: grid;
+  place-items: center; 
+  
+}

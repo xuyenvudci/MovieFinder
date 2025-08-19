@@ -1,0 +1,57 @@
+.header{
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.navbar {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+   
+    z-index: 3;
+}
+
+.navbar a{
+   text-decoration: none;
+   color: white;
+   font-size: 1.6rem;
+   background: rgba(173, 216, 230, 0.1); 
+  border-radius: 16px;
+  backdrop-filter: blur(10px);       
+    padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(255, 254, 254, 0.4); 
+}
+
+.navbar a:hover {
+    color:  rgba(0, 255, 179, 0.7);
+    background: rgba(173, 216, 230, 0.1); 
+  border-radius: 16px;
+  backdrop-filter: blur(10px);       
+    padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 255, 179, 0.7); 
+}
+
+.navbar a.activelink {
+ color:  rgba(0, 255, 179, 0.7);
+    background: rgba(173, 216, 230, 0.1); 
+  border-radius: 16px;
+  backdrop-filter: blur(10px);       
+    padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 255, 179, 0.7); 
+}
+
+.navbar a.inactivelink {
+   color: white;
+   font-size: 1.6rem;
+   background: rgba(173, 216, 230, 0.1); 
+  border-radius: 16px;
+  backdrop-filter: blur(10px);       
+    padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(255, 254, 254, 0.4); 
+}

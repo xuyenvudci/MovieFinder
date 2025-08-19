@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useMyContext } from '../context/AppContext';
 import type { Movie } from '../libs/type';
+import styles from '../pages/home.module.css'
 
 type Status = "idle" | "loading" | "done";
 
@@ -32,33 +33,46 @@ export default function SearchBar() {
     fetchMovies(search);
   };
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="searchMovie"
-          placeholder="Search by movie name"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button type="submit">Find</button>
-      </form>
+return (
+  <div>
+    <form onSubmit={handleSubmit} className={styles.searchForm}>
+      <input
+        type="text"
+        name="searchMovie"
+        placeholder="Search by movie name"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button type="submit">Find</button>
+       <button type="button" onClick={() => { setSearch(''); setMovies([]); setStatus("idle"); }}>
+    Clear
+  </button>
+    </form>
 
-      {status === "idle" && null}
-      {status === "loading" && <p>Loading...</p>}
-      {status === "done" && movies.length === 0 && <p>Nothing found</p>}
-      {status === "done" && movies.length > 0 && (
-        movies.map((movie) => {
-          const isLike = likedMovies.some((m: Movie) => m.imdbID === movie.imdbID);
+    {status === "idle" && null}
+    {status === "loading" && <p>Loading...</p>}
+    {status === "done" && movies.length === 0 && <p>Nothing found</p>}
+    
+    {status === "done" && movies.length > 0 && (
+      <div className={styles.movieGrid}>
+        {movies.map((movie) => {
+          const isLike = likedMovies.some(
+            (m: Movie) => m.imdbID === movie.imdbID
+          );
+
           return (
-            <ul key={movie.imdbID}>
-              <li>
+            <div key={movie.imdbID} className={styles.movieCard}>
+              <NavLink to={`/movies/${movie.imdbID}`}>
+                <img src={movie.Poster} alt={movie.Title} />
+              </NavLink>
+              <div className={styles.movieInfo}>
                 <NavLink to={`/movies/${movie.imdbID}`}>
-                  {movie.Title} ({movie.Year})
+                  <h3>
+                    {movie.Title} ({movie.Year})
+                  </h3>
                 </NavLink>
                 <span
-                  className="like"
+                  className={styles.like}
                   onClick={() =>
                     isLike
                       ? removeFromFavourite(movie.imdbID)
@@ -67,16 +81,12 @@ export default function SearchBar() {
                 >
                   {isLike ? "❤️" : "🤍"}
                 </span>
-              </li>
-              <li>
-                <NavLink to={`/movies/${movie.imdbID}`}>
-                  <img src={movie.Poster} alt={movie.Title} />
-                </NavLink>
-              </li>
-            </ul>
+              </div>
+            </div>
           );
-        })
-      )}
-    </div>
-  );
+        })}
+      </div>
+    )}
+  </div>
+);
 }
