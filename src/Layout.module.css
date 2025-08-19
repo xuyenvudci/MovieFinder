@@ -1,0 +1,26 @@
+
+.backgroundWrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  background-image: url('./pictures/cinema.jpeg'); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 0;
+}
+
+.contentOverlay {
+    display: flex;
+    flex-direction: column;
+      flex: 1;  
+  position: relative;
+  z-index: 1;
+  
+  color: white; 
+}
+
+.theMain{
+    flex: 1;
+}
