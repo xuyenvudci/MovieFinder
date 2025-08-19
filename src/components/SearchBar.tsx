@@ -6,7 +6,9 @@ import type { Movie } from '../libs/type';
 type Status = "idle" | "loading" | "done";
 
 export default function SearchBar() {
-  const [search, setSearch] = useState('');
+  const [searchMovie, setSearchMovie] = useState('');
+  const [searchType, setSearchType] = useState('');
+  const [searchYear, setSearchYear] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const context = useMyContext();
@@ -14,10 +16,11 @@ export default function SearchBar() {
   if (!context) return <p>Context is unavailable</p>;
   const { likedMovies, addToFavourite, removeFromFavourite } = context;
 
-  const fetchMovies = async (query: string) => {
-    if (!query) return;
+  const fetchMovies = async (query1: string, query2:string, query3: string) => {
+    if (!query1) return;
     setStatus("loading");
-    const res = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=16c8cb0e`);
+
+    const res = await fetch(`https://www.omdbapi.com/?s=${query1}&type=${query2}&y=${query3}&apikey=16c8cb0e`);
     const data = await res.json();
     if (data.Search) {
       setMovies(data.Search);
@@ -29,7 +32,7 @@ export default function SearchBar() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetchMovies(search);
+    fetchMovies(searchMovie, searchType, searchYear);
   };
 
   return (
@@ -39,12 +42,27 @@ export default function SearchBar() {
           type="text"
           name="searchMovie"
           placeholder="Search by movie name"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={searchMovie}
+          onChange={(e) => setSearchMovie(e.target.value)}
         />
+        <input type="text"
+          name="searchYear"
+          placeholder="Search by year"
+          value={searchYear}
+          onChange={(e) => setSearchYear(e.target.value)}
+        />
+        <select
+          name="searchType"
+          onChange={(e) => setSearchType(e.target.value)}
+        >
+          <option value="">All type</option>
+          <option value="movie">Movie</option>
+          <option value="series">Series</option>
+          <option value="episode">Episode</option>
+        </select>
         <button type="submit">Find</button>
       </form>
-
+      
       {status === "idle" && null}
       {status === "loading" && <p>Loading...</p>}
       {status === "done" && movies.length === 0 && <p>Nothing found</p>}
