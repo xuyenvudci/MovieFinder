@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import MovieCard from "./components/MovieCard";
 import Favourite from "./pages/Favourite";
 import PageNotFound from "./pages/PageNotFound";
+import SearchResult from "./pages/SearchResult";
 
 const Movies = lazy(() => import("./pages/Movies"))
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/movies/:id" element={<MovieCard />}/>
             <Route path="/contact" element={<Contact />} />
             <Route path="/favourite" element={<Favourite />} />
+            <Route path="/search" element={<SearchResult />} />
             <Route path="*" element={<PageNotFound />} />
          </Route>
       </Routes>

@@ -10,7 +10,7 @@ export default function Movies() {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const res = await fetch(`https://www.omdbapi.com/?s=lion&apikey=16c8cb0e`);
+      const res = await fetch(`https://www.omdbapi.com/?s=action&apikey=16c8cb0e`);
       const data = await res.json();
       if (data.Search) {
         setMovies(data.Search);
